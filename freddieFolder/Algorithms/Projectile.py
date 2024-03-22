@@ -31,10 +31,9 @@ class Projectile:
         # history of projectile
         self._data = {'totalTime': [0], 'rangeFraction': [0], 'vx': [self.vx], 'vy': [self.vy], 'v': [self.initialVel], 'x': [self.x], 'y': [self.y]}
 
-    def log(self, rangeFraction=False) -> None:
-        if rangeFraction:
-            self._data['rangeFraction'].append(self._data['rangeFraction'][-1] + Constants.FRACTION_OF_RANGE)
+    def log(self) -> None:
         self._data['totalTime'].append(self._data['totalTime'][-1] + Constants.TIMESTEP)  # takes the last time in list, then adds deltaTime
+        self._data['rangeFraction'].append(self._data['rangeFraction'][-1] + Constants.FRACTION_OF_RANGE)  # takes the last fraction of range in list, then adds delta distance
         self._data['vx'].append(self.vx)
         self._data['vy'].append(self.vy)
         self._data['v'].append(math.sqrt(self.vx ** 2 + self.vy ** 2))  # uses pythagoras to calculate magnitude of velocity

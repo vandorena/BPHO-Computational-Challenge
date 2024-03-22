@@ -51,7 +51,7 @@ def calculateTrajectoryDataToPoint(proj: Projectile.Projectile, xMax: float):
     for step in range(int(1 / Constants.FRACTION_OF_RANGE)):  # Loop that moves through the updates
         proj.x += deltaX
         proj.y = startingHeight + proj.x * math.tan(proj.initialAngle) - (Constants.g / (2 * proj.initialVel ** 2)) * (1 + math.tan(proj.initialAngle) ** 2) * proj.x ** 2  # formula for y position, based off of x position of a projectile.
-        proj.log(True)  # True to make the procedure record the range fraction
+        proj.log()  # True to make the procedure record the range fraction
 
 
 if __name__ == '__main__':
