@@ -76,14 +76,22 @@ def build_axes(times,u,theta,height,gravity):
 
 def get_range_and_time(u_x,u_y,gravity,height):
     time = quadratic_solver((-0.5*gravity),u_y,(-1*height))
-    time_delta = time/1000
+    if time == "Bad Argument":
+        return exit()
+    time_delta = time/1010
     Range = u_x * time
     return Range,time_delta
 
 def quadratic_solver(a,b,c):
-    determinent = math.sqrt(b**2 - (4*a*c))
-    positive_result = (- b + determinent)/(2*a)
-    negative_result = (-b - determinent)/(2*a)
+    holder = False
+    determinent = b**2 - (4*a*c)
+    if determinent < 0:
+        return "Bad Argument"
+    determinent = math.sqrt(determinent)
+    positive_result = (-1*b + determinent)/(2*a)
+    negative_result = (-1*b - determinent)/(2*a)
+
+
     if positive_result > negative_result:
         return positive_result
     else:
@@ -96,7 +104,12 @@ Range,time_delta = get_range_and_time(u_x,u_y,gravity,height)
 times = time_array(time_delta)
 x_axis,y_axis = build_axes(times,launch_speed,launch_angle,height,gravity)
 
-print(x_axis)
+
+
+
+#print(x_axis)
 print("")
 print("")
-print(y_axis)
+print(Range)
+print(time_delta)
+#print(y_axis)
