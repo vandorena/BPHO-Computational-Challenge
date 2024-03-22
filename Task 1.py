@@ -23,9 +23,9 @@ def get_inputs():
     launch_speed = 0
     while not input_holder1:
         try:
-            launch_speed = int(input())
+            launch_speed = float(input())
         except BaseException: #Im being lazy sorry
-            pass
+            input_holder1 = False
         if launch_speed > 0:
             input_holder1 = True
     input_holder2 = False
@@ -44,7 +44,7 @@ def get_inputs():
     gravity = 0
     while not input_holder3:
         try:
-            gravity = int(input())
+            gravity = float(input())
         except BaseException:
             pass
         if gravity > 0:
@@ -54,7 +54,7 @@ def get_inputs():
     height = 0
     while not input_holder4:
         try:
-            height = int(input())
+            height = float(input())
         except BaseException:
             pass
         if height != None:
@@ -64,7 +64,7 @@ def get_inputs():
     time_step = 0
     while not input_holder5:
         try:
-            time_step = int(input())
+            time_step = float(input())
         except BaseException:
             pass
         if time_step > 0:
@@ -83,8 +83,22 @@ def get_inputs():
     if input_holder1 == True and input_holder2 == True and input_holder3 == True and input_holder4 == True and input_holder5 == True and input_holder6 == True:
         return launch_speed,launch_angle,gravity,height,time_step,step_max
     
-    launch_speed,launch_angle,gravity,height,time_delta,max_step = get_inputs()
-    times = time_array(time_delta,max_step)
+
+def build_axes(times,u,theta,height,gravity):
+    u_x,u_y = decompose(u,theta)
+    x = []
+    y = []
+    for i in range(0,len(times)):
+        x.append(find_x(u_x,times[i]))
+        y.append(find_y(u_y,times[i],height,gravity))
+    return x,y
 
 
-        
+launch_speed,launch_angle,gravity,height,time_delta,max_step = get_inputs()
+times = time_array(time_delta,max_step)
+x_axis,y_axis = build_axes(times,launch_speed,launch_angle,height,gravity)
+
+print(x_axis)
+print("")
+print("")
+print(y_axis)
