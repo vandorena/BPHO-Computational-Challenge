@@ -74,42 +74,41 @@ def build_axes(times,u,theta,height,gravity):
         y.append(find_y(u_y,times[i],height,gravity))
     return x,y
 
-def get_range_and_time(u_x,u_y,gravity,height):
-    time = quadratic_solver((-0.5*gravity),u_y,(-1*height))
-    if time == "Bad Argument":
-        return exit()
-    time_delta = time/1010
-    Range = u_x * time
-    return Range,time_delta
+#def get_range_and_time(u_x,u_y,gravity,height):
+ #   time = quadratic_solver((-0.5*gravity),u_y,(-1*height))
+  #  if time == "Bad Argument":
+   #     return exit()
+    #time_delta = time/1010
+    #Range = u_x * time
+    #return Range,time_delta
 
-def quadratic_solver(a,b,c):
-    holder = False
-    determinent = b**2 - (4*a*c)
-    if determinent < 0:
-        return "Bad Argument"
-    determinent = math.sqrt(determinent)
-    positive_result = (-1*b + determinent)/(2*a)
-    negative_result = (-1*b - determinent)/(2*a)
+#def quadratic_solver(a,b,c):
+ #   holder = False
+ #   determinent = b**2 - (4*a*c)
+ #   if determinent < 0:
+ #       return "Bad Argument"
+  #  determinent = math.sqrt(determinent)
+#    positive_result = (-1*b + determinent)/(2*a)
+ #   negative_result = (-1*b - determinent)/(2*a)
+ #   if positive_result > negative_result:
+ #       return positive_result
+  #  else:
+ #       return negative_result
 
-
-    if positive_result > negative_result:
-        return positive_result
-    else:
-        return negative_result
-    
-
+def find_range(u,theta,gravity,height):
+    Range = (u**2)/gravity
+    Range = Range*((math.sin(theta)*math.cos(theta)) + ((math.cos(theta))*math.sqrt((math.sin(theta)**2)+ ((2*gravity*height)/(u**2)))))
+    return Range
 launch_speed,launch_angle,gravity,height = get_inputs()
 u_x,u_y = decompose(launch_speed,launch_angle)
-Range,time_delta = get_range_and_time(u_x,u_y,gravity,height)
-times = time_array(time_delta)
-x_axis,y_axis = build_axes(times,launch_speed,launch_angle,height,gravity)
-
-
+#Range,time_delta = get_range_and_time(u_x,u_y,gravity,height)
+#times = time_array(time_delta)
+#x_axis,y_axis = build_axes(times,launch_speed,launch_angle,height,gravity)
+Range = find_range(launch_speed,launch_angle,gravity,height)
 
 
 #print(x_axis)
 print("")
 print("")
 print(Range)
-print(time_delta)
 #print(y_axis)
