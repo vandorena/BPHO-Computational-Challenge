@@ -1,4 +1,4 @@
-import matplotlib
+import matplotlib_inline
 
 def time_array(delta_seconds):
     array = []
