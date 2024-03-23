@@ -21,15 +21,19 @@ class Projectile:
         :param vy: optional - can specify vx and vy instead of v and angle
         :return: None
         """
-        # initial coordinates
-        self.x = x
-        self.y = y
 
+        # Non-Variable Variables (don't change after creation)
         # initial velocity vector
         self.initialVel = v
         if angle > (math.pi / 2):
             angle = math.radians(angle)
         self.initialAngle = angle  # expected in radians (but if bigger than pi/2, then assumes not and converts)
+        self.initialHeight = y
+
+        # Variable Variables
+        # variable coordinates
+        self.x = x
+        self.y = y
 
         # velocity components
         if vx is not None and vy is not None:               # if vx and vy are specified over v and angle

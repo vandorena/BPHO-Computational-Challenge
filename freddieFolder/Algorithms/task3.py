@@ -47,11 +47,10 @@ def calculateTrajectoryDataToPoint(proj: Projectile.Projectile, xMax: float) -> 
     :param xMax: float
     :return: None
     """
-    startingHeight = proj.y  # save starting height, as changes during algorithm
     deltaX = xMax * Constants.FRACTION_OF_RANGE  # defined the amount that x is increasing per update
     for _ in range(int(1 / Constants.FRACTION_OF_RANGE)):  # Loop that moves through the updates
         proj.x += deltaX
-        proj.y = startingHeight + proj.x * math.tan(proj.initialAngle) - (Constants.g / (2 * proj.initialVel ** 2)) * (1 + math.tan(proj.initialAngle) ** 2) * proj.x ** 2  # formula for y position, based off of x position of a projectile.
+        proj.y = proj.initialHeight + proj.x * math.tan(proj.initialAngle) - (Constants.g / (2 * proj.initialVel ** 2)) * (1 + math.tan(proj.initialAngle) ** 2) * proj.x ** 2  # formula for y position, based off of x position of a projectile.
         proj.log()
 
 
@@ -68,7 +67,7 @@ if __name__ == '__main__':
     minSpeedProjectile = minimumSpeed(xFinal, yFinal)   # can also add (xi=_, yi=_) to change starting position
     lowBallProjectile, highBallProjectile = lowAndHighBall(xFinal, yFinal, initialSpeed)    # can also add (xi=_, yi=_) to change starting position
 
-    # run projectile objects through procedure
+    # run projectile objects through procedure (could use task 1/2 algorithms as well, if we need to keep going until hits the floor)
     calculateTrajectoryDataToPoint(minSpeedProjectile, xFinal)
     calculateTrajectoryDataToPoint(lowBallProjectile, xFinal)
     calculateTrajectoryDataToPoint(highBallProjectile, xFinal)
