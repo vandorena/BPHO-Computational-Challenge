@@ -32,12 +32,13 @@ class Projectile:
         self.initialAngle = angle  # expected in radians (but if bigger than pi/2, then assumes not and converts)
 
         # velocity components
-        self.vx = vx
-        if vx is None:
+        if vx is not None and vy is not None:               # if vx and vy are specified over v and angle
+            self.vx = vx
+            self.vy = vy
+            self.initialAngle = math.atan2(self.vy, self.vx)
+            self.initialVel = math.sqrt(vx**2 + vy**2)
+        else:                                               # if not specified
             self.vx = math.cos(self.initialAngle) * v
-
-        self.vy = vy
-        if vy is None:
             self.vy = math.sin(self.initialAngle) * v
 
         # history of projectile
