@@ -8,15 +8,14 @@ def calculateTrajectoryData(proj: Projectile.Projectile):
     :param proj: Projectile.Projectile
     :return: None
     """
-
     while proj.y >= 0:
+        # updating position
+        proj.x += proj.vx * Constants.TIMESTEP
+        proj.y += (proj.vy * Constants.TIMESTEP) - (0.5 * Constants.g * (Constants.TIMESTEP**2))
+
         # updating velocity
         proj.vx = proj.vx  # As x velocity isn't affected
         proj.vy += -Constants.g * Constants.TIMESTEP  # Accelerated downwards by g
-
-        # updating position
-        proj.x += proj.vx * Constants.TIMESTEP
-        proj.y += proj.vy * Constants.TIMESTEP
 
         # updating data
         proj.log()
