@@ -2,7 +2,7 @@ import Projectile
 import Constants
 
 
-def calculateTrajectoryData(proj: Projectile.Projectile):
+def calculateTrajectoryData(proj: Projectile.Projectile) -> None:
     """
     A procedure that takes in a projectile object and runs it through a drag-less projectile motion using a predetermined delta time. It keeps going until it hits the floor (y < 0).
     :param proj: Projectile.Projectile

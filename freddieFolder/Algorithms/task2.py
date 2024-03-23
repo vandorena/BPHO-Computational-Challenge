@@ -3,7 +3,7 @@ import Projectile
 import Constants
 
 
-def calculateTrajectoryData(proj: Projectile.Projectile):
+def calculateTrajectoryData(proj: Projectile.Projectile) -> None:
     """
     A procedure that takes in a projectile object and runs it through a drag-less projectile motion using the projectile equation (analytic method).
     It keeps increasing x regularly until it hits the floor (y < 0).
@@ -18,7 +18,7 @@ def calculateTrajectoryData(proj: Projectile.Projectile):
     for step in range(int(1/Constants.FRACTION_OF_RANGE)):  # Loop that moves through the updates
         proj.x += deltaX
         proj.y = startingHeight + proj.x * math.tan(proj.initialAngle) - (Constants.g / (2 * proj.initialVel**2)) * (1 + math.tan(proj.initialAngle)**2) * proj.x ** 2  # formula for y position, based off of x position of a projectile.
-        proj.log()  # True to make the procedure record the range fraction
+        proj.log()
 
     # x and y coordinated for the maximum point that the projectile gets to, for later use.
     xApogee = (proj.initialVel ** 2 / Constants.g) * math.sin(proj.initialAngle) * math.cos(proj.initialAngle)

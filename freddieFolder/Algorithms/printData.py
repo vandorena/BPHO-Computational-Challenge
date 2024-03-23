@@ -1,4 +1,4 @@
-def print_table(data: list, dataInColumns=False):
+def print_table(data: list, dataInColumns=False) -> None:
     """
     This procedure takes in a list of lists and prints it as a 2d table
     :param data: is the 2d list
