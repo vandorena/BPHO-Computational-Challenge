@@ -1,2 +1,5 @@
 .Physics/env
 *.pdf
+.venv
+venv
+*.db
