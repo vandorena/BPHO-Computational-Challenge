@@ -1,7 +1,7 @@
 from flask import Flask, request, redirect, render_template, url_for, g , session
-import sqlite3, uuid
+import sqlite3, uuid, login_request_handler
 from datetime import datetime as dt
-import datetime
+
 
 
 app = Flask(__name__)
@@ -14,3 +14,5 @@ def close_connection(exception):
     db = getattr(g,"_database",None)
     if db is not None:
         db.close()
+
+@app.route("/login", methods=["POST","GET"])
