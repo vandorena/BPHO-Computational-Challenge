@@ -16,3 +16,5 @@ def close_connection(exception):
         db.close()
 
 @app.route("/login", methods=["POST","GET"])
+ def login():
+   pass

@@ -12,12 +12,13 @@ def close_connection(exception):
     if db is not None:
         db.close()
 
-def login():
+def login(database_name):
+    init_db(database_name)
     if request.form:
         if "enter" in request.form:
             user = request.form['UserName']
             password = request.form['Pass']
-            cur = get_db()
+            cur = get_db(database_name)
             print("checking username")
             user_check = cur.execute(f"SELECT usertoken FROM myuserbase WHERE username=?AND password=?",(user,password)) # I have changed this to make sure that a sql injection doesnt break it.
             cur.connection.commit()
@@ -35,3 +36,10 @@ def login():
         elif "new_user" in request.form:
             return redirect(url_for("new_user"))
     return render_template("login.html")
+
+def init_db(database_name):
+    cur = get_db(database_name)
+    cur.execute("CREATE TABLE IF NOT EXISTS myuserbase(username VARCHAR(1000),password VARCHAR(1000),usertoken VARCHAR(50))")
+    cur.connection.commit()
+    cur.execute("CREATE TABLE IF NOT EXISTS comments(usertoken VARCHAR(50),comment MEDIUMTEXT,datetime TIMESTAMP)")
+    cur.connection.commit()
