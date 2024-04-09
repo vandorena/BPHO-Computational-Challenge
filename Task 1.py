@@ -24,7 +24,7 @@ def get_inputs():
     while not input_holder1:
         try:
             launch_speed = float(input())
-        except BaseException: #Im being lazy sorry
+        except TypeError: #Im being lazy sorry - I think this is the right one, but I have a bit of a headache right now and this might not be right.
             input_holder1 = False
         if launch_speed > 0:
             input_holder1 = True
@@ -34,7 +34,7 @@ def get_inputs():
     while not input_holder2:
         try:
             launch_angle = int(input())
-        except BaseException:
+        except TypeError:
             pass
         if launch_angle > 0 and launch_angle <= 90:
             launch_angle = math.radians(launch_angle)
@@ -45,7 +45,7 @@ def get_inputs():
     while not input_holder3:
         try:
             gravity = float(input())
-        except BaseException:
+        except TypeError:
             pass
         if gravity > 0:
             input_holder3 = True
@@ -55,7 +55,7 @@ def get_inputs():
     while not input_holder4:
         try:
             height = float(input())
-        except BaseException:
+        except TypeError:
             pass
         if height != None:
             input_holder4 = True
@@ -65,7 +65,7 @@ def get_inputs():
     while not input_holder5:
         try:
             time_step = float(input())
-        except BaseException:
+        except TypeError:
             pass
         if time_step > 0:
             input_holder5 = True
@@ -75,7 +75,7 @@ def get_inputs():
     while not input_holder6:
         try:
             step_max = int(input())
-        except BaseException:
+        except TypeError:
             pass
         if step_max > 0:
             input_holder6 = True

@@ -14,6 +14,7 @@ def calculateXYDrag(vx, vy, k):
     ax = -vx * k * v
     ay = - Constants.g - vy * k * v
     return ax, ay
+    
 
 
 def calculateDragTrajectoryData(proj: Projectile.Projectile, airRes: float) -> tuple[list, list]:
