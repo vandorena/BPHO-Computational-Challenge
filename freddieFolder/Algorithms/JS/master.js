@@ -1,9 +1,9 @@
 // Constants
 //-------------------------------------------------
-TIMESTEP = 0.02;
-FRACTION_OF_RANGE = 0.02;
-g = 9.81;
-COE = 0.7;
+const TIMESTEP = 0.02;
+const FRACTION_OF_RANGE = 0.02;
+const g = 9.81;
+const COE = 0.7;
 // Projectile Class   
 //-------------------------------------------------
 
@@ -92,3 +92,6 @@ function printTable(data, dataInColumns = false) {
         console.log(formattedRow);
     }
 }
+
+// Task 1
+// --------------------------------------------------
