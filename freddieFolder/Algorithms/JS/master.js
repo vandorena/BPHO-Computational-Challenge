@@ -1,6 +1,6 @@
 // Constants
 //-------------------------------------------------
-const TIMESTEP = 0.02;
+const TIMESTEP = 0.01;
 const FRACTION_OF_RANGE = 0.02;
 const g = 9.81;
 const COE = 0.7;
@@ -13,7 +13,7 @@ class Projectile {
         if (angle > Math.PI / 2) {
             angle = Math.radians(angle);
         }
-        this.initialAngle = angle;
+        this.initialAngle = this.initialAngle = radians(angle);
         this.initialHeight = y;
         this.x = x;
         this.y = y;
@@ -95,3 +95,47 @@ function printTable(data, dataInColumns = false) {
 
 // Task 1
 // --------------------------------------------------
+class Projectile {
+    constructor(x, y, v, angle) {
+        this.x = x;
+        this.y = y;
+        this.vx = v * Math.cos(angle * Math.PI / 180);  // initial x velocity
+        this.vy = v * Math.sin(angle * Math.PI / 180);  // initial y velocity
+        this.logData = [];
+    }
+
+    log() {
+        this.logData.push([this.x, this.y, this.vx, this.vy]);
+    }
+
+    printAsTable(exclude = []) {
+        let dataToPrint = [];
+        for (let key in this) {
+            if (!exclude.includes(key)) {
+                dataToPrint.push([key].concat(this[key]));
+            }
+        }
+        printTable(dataToPrint, true);
+    }
+}
+
+function task1CalculateTrajectoryData(proj,tolerance=0.001) {
+    const g = 9.81;  // acceleration due to gravity
+    const TIMESTEP = 0.01;  // time step
+
+    while (proj.y >= tolerance) { // Tolerance Here to prevent errors due to floating point precision.
+        // updating position
+        proj.x += proj.vx * TIMESTEP;
+        proj.y += (proj.vy * TIMESTEP) - (0.5 * g * (TIMESTEP ** 2));
+
+        // updating velocity
+        proj.vy += -g * TIMESTEP;  // Accelerated downwards by g
+
+        // updating data
+        proj.log();
+    }
+}
+
+//Task 2
+//----------------------------------------------------------------------------------------
+
