@@ -261,3 +261,111 @@ function calculateParabolaData(proj) {
 
 // Task 6
 // -----------------------------------------------------------------------------------------------------------------------------------------------
+function integrationFunc(lim) {
+    /**
+     * This function calculates the integral used for distance traveled calculation.
+     * 
+     * @param {number} lim - The integration limit.
+     * @returns {number} The result of the integration.
+     */
+    return 0.5 * Math.log(Math.abs(Math.sqrt(1 + lim ** 2) + lim)) + 0.5 * lim * Math.sqrt(1 + lim ** 2);
+  }
+  
+  function calculateDistanceTravelled(proj) {
+    /**
+     * This function calculates the distance traveled by a projectile.
+     * 
+     * @param {Projectile} proj - The projectile object.
+     * @returns {void} (doesn't return anything)
+     */
+    const range = (proj.initialVel ** 2 / Constants.g) * (
+      Math.sin(proj.initialAngle) * Math.cos(proj.initialAngle) +
+      Math.cos(proj.initialAngle) * Math.sqrt(Math.sin(proj.initialAngle) ** 2 + (2 * Constants.g * proj.initialHeight) / proj.initialVel ** 2)
+    );
+    const multiplier = (proj.initialVel ** 2) / (Constants.g * (1 + Math.tan(proj.initialAngle) ** 2));
+    const lowerLimit = Math.tan(proj.initialAngle) - (Constants.g * range) * (1 + Math.tan(proj.initialAngle) ** 2) / (proj.initialVel ** 2);
+    const upperLimit = Math.tan(proj.initialAngle);
+  
+    const distanceTraveled = multiplier * (integrationFunc(upperLimit) - integrationFunc(lowerLimit));
+    console.log('distance Traveled:', distanceTraveled);
+  }
+
+// Task 7
+//-----------------------------------------------------------------------------------------------------------------------------------------
+
+function calculateRangeTimeData(proj) {
+    /**
+     * This function calculates the projectile's range at regular time intervals.
+     * 
+     * @param {Projectile} proj - The projectile object.
+     * @returns {number[]} A list of range values at each time step.
+     */
+    const distanceFromStartData = [0];
+    while (proj.y >= -5) {
+      // Update position
+      proj.x += proj.vx * Constants.TIMESTEP;
+      proj.y += (proj.vy * Constants.TIMESTEP) - (0.5 * Constants.g * (Constants.TIMESTEP ** 2));
+  
+      // Update velocity
+      proj.vx = proj.vx; // No change in x-velocity
+      proj.vy += -Constants.g * Constants.TIMESTEP; // Accelerated downwards by g
+  
+      // Update data and calculate range
+      proj.log();
+      const totalTime = proj.getData()['totalTime'][-1];
+      distanceFromStartData.push(Math.sqrt(
+        proj.initialVel ** 2 * totalTime ** 2 -
+        Constants.g * totalTime ** 3 * proj.initialVel * Math.sin(proj.initialAngle) +
+        0.25 * Constants.g ** 2 * totalTime ** 4
+      ));
+    }
+  
+    return distanceFromStartData;
+  }
+  
+  function calculateMaxAndMinTime(proj) {
+    /**
+     * This function calculates the time for maximum and minimum height
+     * before going below y = 0 (requires angle > ~70.5 degrees).
+     * 
+     * @param {Projectile} proj - The projectile object.
+     * @returns {tuple<number, number>} A tuple containing max and min time.
+     */
+    const multiplier = (3 * proj.initialVel) / (2 * Constants.g);
+    const a = Math.sin(proj.initialAngle);
+    const b = Math.sqrt(Math.sin(proj.initialAngle) ** 2 - (8 / 9));
+    return multiplier * a - multiplier * b, multiplier * a + multiplier * b;
+  }
+
+  // Task 8
+  // ----------------------------------------------------------------------------------------------------------------------------------------------
+
+  function bouncyProjectileData(proj, n) {
+    /**
+     * This function simulates a bouncing projectile for a specified number of bounces.
+     * 
+     * @param {Projectile} proj - The projectile object.
+     * @param {number} n - The number of bounces.
+     */
+    let bounceCount = 0;
+    while (bounceCount <= n) {
+      // Update position
+      proj.x += proj.vx * Constants.TIMESTEP;
+      proj.y += (proj.vy * Constants.TIMESTEP) - (0.5 * Constants.g * (Constants.TIMESTEP ** 2));
+  
+      // Update velocity
+      proj.vx = proj.vx; // No change in x-velocity
+      proj.vy += -Constants.g * Constants.TIMESTEP; // Accelerated downwards by g
+  
+      // Update data
+      proj.log();
+  
+      // Check for bounce
+      if (proj.y < 0) {
+        proj.y = 0;
+        proj.vy *= -Constants.COE; // Bounce with coefficient of restitution (COE)
+        bounceCount++;
+      }
+    }
+  }
+  
