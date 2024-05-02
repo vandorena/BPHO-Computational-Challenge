@@ -369,3 +369,75 @@ function calculateRangeTimeData(proj) {
     }
   }
   
+// Task 9
+// -----------------------------------------------------------------------------------------------------------------------------
+function airResistanceFactor(dragCoefficient, crossSectionArea, airDensity, mass) {
+    /**
+     * This function calculates the air resistance factor for a projectile.
+     * 
+     * @param {number} dragCoefficient - The drag coefficient of the projectile.
+     * @param {number} crossSectionArea - The cross-sectional area of the projectile.
+     * @param {number} airDensity - The air density.
+     * @param {number} mass - The mass of the projectile.
+     * @returns {number} The air resistance factor.
+     */
+    return (0.5 * dragCoefficient * airDensity * crossSectionArea) / mass;
+  }
+  
+  function calculateXYDrag(vx, vy, k) {
+    /**
+     * This function calculates the air resistance acceleration in x and y directions.
+     * 
+     * @param {number} vx - The x-velocity of the projectile.
+     * @param {number} vy - The y-velocity of the projectile.
+     * @param {number} k - The air resistance factor.
+     * @returns {tuple<number, number>} A tuple containing x and y acceleration.
+     */
+    const v = Math.sqrt(vx ** 2 + vy ** 2);
+    const ax = -vx * k * v;
+    const ay = -Constants.g - vy * k * v;
+    return [ax, ay];
+  }
+  
+  function calculateDragTrajectoryData(proj, airRes) {
+    /**
+     * This function calculates the trajectory of a projectile with air resistance.
+     * 
+     * @param {Projectile} proj - The projectile object.
+     * @param {number} airRes - The air resistance factor.
+     * @returns {tuple<list, list>} A tuple containing lists of x and y accelerations.
+     */
+    const axList = [];
+    const ayList = [];
+  
+    // Initial acceleration due to air resistance
+    const [ax, ay] = calculateXYDrag(proj.vx, proj.vy, airRes);
+    axList.push(ax);
+    ayList.push(ay);
+  
+    while (proj.y >= 0) {
+      // Update position
+      proj.x += proj.vx * Constants.TIMESTEP + 0.5 * ax * Constants.TIMESTEP ** 2;
+      proj.y += proj.vy * Constants.TIMESTEP + 0.5 * ay * Constants.TIMESTEP ** 2;
+  
+      // Update velocity
+      proj.vx += ax * Constants.TIMESTEP;
+      proj.vy += ay * Constants.TIMESTEP;
+  
+      // Get drag for updated velocity
+      const [newAx, newAy] = calculateXYDrag(proj.vx, proj.vy, airRes);
+  
+      // Update data
+      proj.log();
+  
+      axList.push(newAx);
+      ayList.push(newAy);
+  
+      // Update acceleration for next step
+      ax = newAx;
+      ay = newAy;
+    }
+  
+    return [axList, ayList];
+  }
+  
