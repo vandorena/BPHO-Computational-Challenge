@@ -79,3 +79,4 @@ if __name__ == '__main__':
     yHighBall = ['yHighBall'] + highBallProjectile.getData()['y']                   # y values (for highBall)
     yMinVel = ['yMinVel'] + minSpeedProjectile.getData()['y']                       # y values (for minimum velocity projectile)
     printData.print_table([f] + [x] + [yLowBall] + [yHighBall] + [yMinVel], True)
+

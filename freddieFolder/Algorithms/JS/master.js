@@ -220,3 +220,44 @@ function calculateTrajectoryDataToPoint(proj, xMax) {
   }
 }
 
+// Task 4
+//--------------------------------------------------------------------------------------------------------------------------
+
+function maxRange(xi, yi, vi) {
+    /**
+     * This function returns the projectile object with the maximum range,
+     * given initial height and velocity.
+     * 
+     * @param {number} xi - The initial x coordinate.
+     * @param {number} yi - The initial y coordinate.
+     * @param {number} vi - The initial velocity of the projectile.
+     * @returns {Projectile} The projectile object with the maximum range.
+     */
+    const angleMax = Math.asin(1 / Math.sqrt(2 + (2 * Constants.g * yi) / (vi * vi)));
+    return new Projectile(xi, yi, vi, angleMax);
+  }
+  
+
+// Task 5 
+//----------------------------------------------------------------------------------------------------------------------------
+function calculateParabolaData(proj) {
+    /**
+     * This function takes a projectile object and calculates its trajectory
+     * along a parabola defined by the equation y = (v^2 / (2g)) - (gx^2) / (2v^2),
+     * where v is the initial velocity and g is the acceleration due to gravity.
+     * Note: This is not simulating real projectile motion, so initial values besides velocity are irrelevant.
+     * 
+     * @param {Projectile} proj - The projectile object.
+     */
+    const maxRange = proj.initialVel ** 2 / Constants.g; // When y = 0, rearranged formula
+    const deltaX = maxRange * Constants.FRACTION_OF_RANGE; // Amount x increases per update
+  
+    for (let step = 0; step < Math.floor(1 / Constants.FRACTION_OF_RANGE); step++) {
+      proj.x += deltaX;
+      proj.y = (proj.initialVel ** 2 / (2 * Constants.g)) - (Constants.g / (2 * proj.initialVel ** 2)) * proj.x ** 2;
+      proj.log();
+    }
+  }
+
+// Task 6
+// -----------------------------------------------------------------------------------------------------------------------------------------------
