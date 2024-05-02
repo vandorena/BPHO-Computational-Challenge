@@ -139,3 +139,35 @@ function task1CalculateTrajectoryData(proj,tolerance=0.001) {
 //Task 2
 //----------------------------------------------------------------------------------------
 
+const { PI } = Math; // Use Math.PI for pi constant
+
+function calculateTrajectoryData(proj) {
+
+  // Calculate maximum range
+  const maxRange = (proj.initialVel ** 2 / Constants.g) * (Math.sin(proj.initialAngle) * Math.cos(proj.initialAngle) + Math.cos(proj.initialAngle) * Math.sqrt(Math.sin(proj.initialAngle) ** 2 + (2 * Constants.g * proj.initialHeight) / proj.initialVel ** 2));
+  const deltaX = maxRange * Constants.FRACTION_OF_RANGE; // Amount x increases per update
+
+  // Loop until y becomes negative (hits the floor)
+  for (let step = 0; step < 1 / Constants.FRACTION_OF_RANGE; step++) {
+    proj.x += deltaX;
+    proj.y = proj.initialHeight + proj.x * Math.tan(proj.initialAngle) - (Constants.g / (2 * proj.initialVel ** 2)) * (1 + Math.tan(proj.initialAngle) ** 2) * proj.x ** 2;
+    proj.log(); // Update log data (assuming your Projectile class has a log method)
+  }
+}
+
+function calculateApogee(proj) {
+
+  const xApogee = (proj.initialVel ** 2 / Constants.g) * Math.sin(proj.initialAngle) * Math.cos(proj.initialAngle);
+  const yApogee = proj.initialHeight + (proj.initialVel ** 2 / (Constants.g * 2)) * Math.sin(proj.initialAngle) ** 2;
+  console.log('x Apogee:', xApogee);
+  console.log('y Apogee:', yApogee, '\n');
+}
+
+// Assuming you have a Projectile class defined elsewhere
+
+if (__dirname === process.cwd()) { // Check if running directly
+  const projectile = new Projectile(x = 0, y = 1, v = 10, angle = 42 * Math.PI / 180); // Convert angle to radians
+  calculateTrajectoryData(projectile);
+  projectile.printAsTable(columns, ['rangeFraction', 'x', 'y']); // Assuming printAsTable accepts an object with 'columns' key
+  calculateApogee(projectile);
+}
