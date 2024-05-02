@@ -163,11 +163,60 @@ function calculateApogee(proj) {
   console.log('y Apogee:', yApogee, '\n');
 }
 
-// Assuming you have a Projectile class defined elsewhere
+// Task 3
+//------------------------------------------------------------------------------------
 
-if (__dirname === process.cwd()) { // Check if running directly
-  const projectile = new Projectile(x = 0, y = 1, v = 10, angle = 42 * Math.PI / 180); // Convert angle to radians
-  calculateTrajectoryData(projectile);
-  projectile.printAsTable(columns, ['rangeFraction', 'x', 'y']); // Assuming printAsTable accepts an object with 'columns' key
-  calculateApogee(projectile);
+ // Use Math.PI for pi constant
+
+function minimumSpeed(xf, yf, xi = 0, yi = 0) {
+ // """
+ // This function returns a projectile object with the minimum speed to reach point (xf, yf).
+
+  //:param xf: The desired x coordinate.
+  //:param yf: The desired y coordinate.
+  //:param xi: The initial x coordinate (default = 0).
+  //:param yi: The initial y coordinate (default = 0).
+  //:return: A Projectile object with the minimum speed and angle to reach (xf, yf).
+ // """
+
+  const minSpeed = Math.sqrt(Constants.g * (yf + Math.sqrt(xf ** 2 + yf ** 2)));
+  const minAngle = Math.atan((yf + Math.sqrt(xf ** 2 + yf ** 2)) / xf);
+  return new Projectile(x, xi, y, yi, v, minSpeed, angle, minAngle);
 }
+
+function lowAndHighBall(xf, yf, initialVel, xi = 0, yi = 0) {
+  //"""
+ // This function returns two projectile objects with the maximum and minimum angles to reach point (xf, yf) with a predetermined velocity.
+
+ // :param xf: The desired x coordinate.
+  //:param yf: The desired y coordinate.
+  //:param initialVel: The initial velocity for both trajectories.
+  //:param xi: The initial x coordinate (default = 0).
+  //:param yi: The initial y coordinate (default = 0).
+  //:return: A tuple containing two Projectile objects with low and high angles for the given initial velocity.
+  
+
+  const a = (Constants.g / (2 * initialVel ** 2)) * xf ** 2;
+  const b = -xf;
+  const c = yf - yi + (Constants.g * xf ** 2) / (2 * initialVel ** 2);
+  const discriminant = b ** 2 - 4 * a * c;
+
+  const lowBallAngle = Math.atan((-b - Math.sqrt(discriminant)) / (2 * a));
+  const highBallAngle = Math.atan((-b + Math.sqrt(discriminant)) / (2 * a));
+
+  return [
+    new Projectile(x, xi, y, yi, v, initialVel, angle, lowBallAngle),
+    new Projectile(x, xi, y, yi, v, initialVel, angle, highBallAngle),
+  ];
+}
+
+function calculateTrajectoryDataToPoint(proj, xMax) {
+
+  const deltaX = xMax * Constants.FRACTION_OF_RANGE; // Amount x increases per update
+  for (let step = 0; step < 1 / Constants.FRACTION_OF_RANGE; step++) {
+    proj.x += deltaX;
+    proj.y = proj.initialHeight + proj.x * Math.tan(proj.initialAngle) - (Constants.g / (2 * proj.initialVel ** 2)) * (1 + Math.tan(proj.initialAngle) ** 2) * proj.x ** 2;
+    proj.log(); // Update log data (assuming your Projectile class has a log method)
+  }
+}
+
