@@ -93,31 +93,6 @@ function printTable(data, dataInColumns = false) {
     }
 }
 
-// Task 1
-// --------------------------------------------------
-class Projectile {
-    constructor(x, y, v, angle) {
-        this.x = x;
-        this.y = y;
-        this.vx = v * Math.cos(angle * Math.PI / 180);  // initial x velocity
-        this.vy = v * Math.sin(angle * Math.PI / 180);  // initial y velocity
-        this.logData = [];
-    }
-
-    log() {
-        this.logData.push([this.x, this.y, this.vx, this.vy]);
-    }
-
-    printAsTable(exclude = []) {
-        let dataToPrint = [];
-        for (let key in this) {
-            if (!exclude.includes(key)) {
-                dataToPrint.push([key].concat(this[key]));
-            }
-        }
-        printTable(dataToPrint, true);
-    }
-}
 
 function task1CalculateTrajectoryData(proj,tolerance=0.001) {
     const g = 9.81;  // acceleration due to gravity
