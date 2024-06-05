@@ -7,27 +7,11 @@
     </head>
     <body>
         <div class="form" name="form">
-            {% if curtask == "-1" %}
-                <form action="/">
+                <form action="/task1">
                     <p>Enter Task:</p>
                     <p><input type = "number" name="task" color="#de3163" autofocus/></p>
                     <p><input type="submit"></p>
                 </form>
-            {% elif curtask == "1" %}
-                <form action="/">
-                    <p>Enter Starting X-Coordinate</p>
-                    <p><input type="number" name="x" autofocus></p>
-                    <p>Enter Starting Y-Coordinate</p>
-                    <p><input type="number" name="y"></p>
-                    <p>Enter Magnitude of the Starting Velocity (m/s)</p>
-                    <p><input type="number" name="v"></p>
-                    <p>Enter Starting Angle (degrees)</p>
-                    <p><input type="number" name="angle"></p>
-                </form>
-            {%endif%}
-        </div>
-        <div name="Image">
-            <img src="/static/images/current_graph.png" alt="current_graph" style="height: 7%; width: 7%; align-content: left;">
         </div>
     </body>
 </html>
