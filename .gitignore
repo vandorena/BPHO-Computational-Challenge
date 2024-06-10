@@ -3,3 +3,6 @@
 .venv
 venv
 *.db
+.freddieFolder\Algorithms\js\RGraph
+freddieFolder\Algorithms\js\RGraph
+RGraph
