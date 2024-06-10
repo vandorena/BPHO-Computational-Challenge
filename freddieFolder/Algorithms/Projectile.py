@@ -79,3 +79,40 @@ class Projectile:
         return self._data
 
 
+class ProjectileList(Projectile):
+    
+    def __init__(self, x: float = 0, y: float = 2, v: float = 20, angle: float = math.radians(45), vx=None, vy=None) -> None:
+        super().__init__(x, y, v, angle, vx, vy)
+        self._data = [[0],[0],[round(self.vx,4)],[round(self.vy,4)],[self.initialVel],[self.x],[self.y]]
+
+    def log(self,roundTo=None) -> None:
+        """
+        Logs the current state of the projectile at each time step.
+        This method updates the data list with the current values of time, range fraction, horizontal velocity, vertical velocity, velocity magnitude, x-coordinate, and y-coordinate. The values are rounded to the specified number of decimal places.
+        Parameters:
+        rounTo
+        Returns:
+        None
+        """
+        if roundTo == None:
+            roundTo = 4
+        self._data[0].append(round(self._data[0][-1] + Constants.TIMESTEP, roundTo))
+        self._data[1].append(round(self._data[1][-1] + Constants.FRACTION_OF_RANGE, roundTo))  # takes the last fraction of range in list, then adds delta distance
+        self._data[2].append(round(self.vx, roundTo))
+        self._data[3].append(round(self.vy, roundTo))
+        self._data[4].append(round(math.sqrt(self.vx ** 2 + self.vy ** 2), roundTo))  # uses pythagoras to calculate magnitude of velocity
+        self._data[5].append(round(self.x, roundTo))
+        self._data[6].append(round(self.y, roundTo))
+
+    def getXgetY(self):
+        """
+        Returns the x and y coordinates of the projectile as a tuple.
+
+        Parameters:
+        None
+
+        Returns:
+        Tuple: A tuple containing the x and y coordinates of the projectile.
+        """
+        return self._data[5], self._data[6]
+

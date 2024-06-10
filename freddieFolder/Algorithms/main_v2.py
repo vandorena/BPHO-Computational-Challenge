@@ -1,9 +1,11 @@
 from flask import Flask, request, redirect, render_template, url_for, g , session
-import task1,task2,task3,task4,task5,task6,task7,task8,task9,Projectile,Constants
+import task1,task2,task3,task4,task5,task6,task7,task8,task9,Projectile,uuid
 import matplotlib.pyplot as plt
 import numpy as np
 
 app = Flask(__name__)
+
+
 
 @app.route("/", methods=["POST","GET"])
 def task_graph_basic():
@@ -31,16 +33,19 @@ def task1graph():
     Processes form data to create a projectile object, calculates its trajectory,
     plots the trajectory, saves the plot as an image, and renders a template to display the result.
     """
+    image_rl = "\static\images\lone.png"
     if request.form:
         try:
-            task1_projectile = Projectile(x=int(request.form["x"]), y=int(request.form["y"]), v=int(request.form["v"]), angle=int(request.form["angle"]))
+            task1_projectile = Projectile.ProjectileList(x=int(request.form["x"]), y=int(request.form["y"]), v=int(request.form["v"]), angle=int(request.form["angle"]))
             task1.calculateTrajectoryData(task1_projectile)
             plt.figure()
-            plt.plot(task1_projectile.getData()["x"], task1_projectile.getData()["y"])
-            plt.savefig('static/images/current_graph.png')   
+            x_data , y_data = task1_projectile.getXgetY()
+            plt.plot(x_data, y_data)
+            image_rl = f"static\images\{uuid.uuid4()}.png"
+            plt.savefig(image_rl)   
         except Exception:
             return redirect(url_for("task_graph_basic"))  
-    return render_template("task1_template.html")
+    return render_template("task1_template.html",image_path=image_rl)
 
 @app.route("/task2", methods=["POST","GET"])
 def task2graph():
