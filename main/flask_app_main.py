@@ -48,6 +48,9 @@ def task1graph():
     image_rl = "\static\images\lone.png"
     if request.form:
         try:
+            if int(request.args["task"]) > 1 and int(request.args["task"]) <=9 and int(request.args["task"]) != 1:
+                task_number = request.args["task"]
+                return redirect(f"/task{task_number}")
             task1_projectile = Projectile.ProjectileList(x=int(request.form["x"]), y=int(request.form["y"]), v=int(request.form["v"]), angle=int(request.form["angle"]))
             task1.calculateTrajectoryData(task1_projectile)
             plt.figure()
@@ -63,6 +66,12 @@ def task1graph():
 
 @app.route("/task2", methods=["POST","GET"])
 def task2graph():
+    """
+    Route that handles generating a graph for Task 2 based on user input.
+    It creates a ProjectileList object with user-provided parameters, calculates the trajectory data using task2.calculateTrajectoryData, plots the trajectory using matplotlib, and saves the plot as an image.
+    If successful, it renders a template with the image path for display.
+    If an exception occurs, it redirects to the task_chooser route.
+    """
     base_image_url = "\static\images\lone.png"
     if request.form:
         try:
