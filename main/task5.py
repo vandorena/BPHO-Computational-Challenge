@@ -9,11 +9,11 @@ def calculateParabolaData(proj: Projectile.Projectile) -> None:
     :param proj: the projectile object going along the parabola path
     :return: None
     """
-    maxRange = proj.initialVel ** 2 / Constants.g       # when y = 0, rearranged formula and calculated
+    maxRange = proj.initialVel ** 2 / proj.g       # when y = 0, rearranged formula and calculated
     deltaX = maxRange * Constants.FRACTION_OF_RANGE  # defined the amount that x is increasing per update
     for step in range(int(1 / Constants.FRACTION_OF_RANGE)):  # Loop that moves through the updates
         proj.x += deltaX
-        proj.y = (proj.initialVel ** 2 / (2 * Constants.g)) - (Constants.g / (2 * proj.initialVel ** 2)) * proj.x ** 2
+        proj.y = (proj.initialVel ** 2 / (2 * proj.g)) - (proj.g / (2 * proj.initialVel ** 2)) * proj.x ** 2
         proj.log()
     return
 

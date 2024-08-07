@@ -15,7 +15,7 @@ def maxRange(xi: float, yi: float, vi: float) -> Projectile.Projectile:
     angleMax = math.asin(1/math.sqrt(2 + (2 * Constants.g * yi) / (vi**2)))
     return Projectile.Projectile(xi, yi, vi, angleMax)
 
-def maxRangeList(xi: float, yi: float, vi: float) -> Projectile.ProjectileList:
+def maxRangeList(xi: float, yi: float, vi: float, g:float) -> Projectile.ProjectileList:
     """
     This return the projectile object that has the maximum range, given initial height and velocity.
     :param xi: The initial x coordinate.
@@ -23,7 +23,7 @@ def maxRangeList(xi: float, yi: float, vi: float) -> Projectile.ProjectileList:
     :param vi: The initial velocity of the projectile.
     :return: The projectile object, starting at (xi, yi) and given the correct velocity and angle to go through (xf, yf)
     """
-    angleMax = math.asin(1/math.sqrt(2 + (2 * Constants.g * yi) / (vi**2)))
+    angleMax = math.asin(1/math.sqrt(2 + (2 * g * yi) / (vi**2)))
     return Projectile.ProjectileList(xi, yi, vi, angleMax)
 
 

@@ -4,7 +4,7 @@ import Constants
 import printData
 
 
-def minimumSpeed(xf: float, yf: float, xi: float = 0, yi: float = 0) -> Projectile.Projectile:
+def minimumSpeed(xf: float, yf: float, xi: float = 0, yi: float = 0) -> Projectile.ProjectileList:
     """
     This return the projectile object of the minimum speed to go through point (xf, yf)
     :param xf: The desired x coordinate that it should go through
@@ -15,7 +15,7 @@ def minimumSpeed(xf: float, yf: float, xi: float = 0, yi: float = 0) -> Projecti
     """
     minSpeed = math.sqrt(Constants.g * (yf + math.sqrt(xf**2 + yf**2)))
     minAngle = math.atan((yf + math.sqrt(xf**2 + yf**2))/xf)
-    return Projectile.Projectile(x=xi, y=yi, v=minSpeed, angle=minAngle)
+    return Projectile.ProjectileList(x=xi, y=yi, v=minSpeed, angle=minAngle)
 
 
 def lowAndHighBall(xf: float, yf: float, initialVel: float, xi: float = 0, yi: float = 0) -> tuple[Projectile.Projectile, Projectile.Projectile]:
@@ -28,14 +28,16 @@ def lowAndHighBall(xf: float, yf: float, initialVel: float, xi: float = 0, yi: f
     :param yi: The initial y coordinate (default = 0)
     :return: The 2 projectile objects, starting at (xi, yi) and given the correct velocity and low and high angle to go through (xf, yf), given an initial velocity.
     """
+    if initialVel <( math.sqrt(Constants.g)* math.sqrt(yf+ math.sqrt(xf**2 + yf**2))):
+        initialVel = ( math.sqrt(Constants.g)* math.sqrt(yf+ math.sqrt(xf**2 + yf**2)))
     # math from slides
     a = (Constants.g / (2 * initialVel**2)) * xf**2
     b = -xf
     c = yf - yi + (Constants.g * xf**2) / (2 * initialVel ** 2)
     discriminant = b ** 2 - 4 * a * c
 
-    lowBallAngle = math.atan((-b - math.sqrt(discriminant)) / (2 * a))
-    highBallAngle = math.atan((-b + math.sqrt(discriminant)) / (2 * a))
+    lowBallAngle = math.atan((-b - math.sqrt(-discriminant)) / (2 * a))
+    highBallAngle = math.atan((-b + math.sqrt(-discriminant)) / (2 * a))
 
     return Projectile.Projectile(x=xi, y=yi, v=initialVel, angle=lowBallAngle), Projectile.Projectile(x=xi, y=yi, v=initialVel, angle=highBallAngle)
 
@@ -53,7 +55,8 @@ def lowAndHighBallList(xf:float,yf:float,initialVel:float,xi:float=0,yi:float = 
     Returns:
     tuple[Projectile.ProjectileList, Projectile.ProjectileList]: A tuple containing two ProjectileList objects representing the low and high projectile trajectories.
     """
-    
+    if initialVel <( math.sqrt(Constants.g)* math.sqrt(yf+ math.sqrt(xf**2 + yf**2))):
+        initialVel = ( math.sqrt(Constants.g)* math.sqrt(yf+ math.sqrt(xf**2 + yf**2)))
     a = (Constants.g / (2*initialVel**2)) * xf**2
     b = -xf
     c = yf-yi + (Constants.g * xf**2) / ( 2 * initialVel **2)

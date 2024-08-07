@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dynamic Plot with Bokeh and Flask</title>
+    <script src="https://cdn.jsdelivr.net/npm/bokehjs@3.3.2/build/bokeh.min.js"></script>
+</head>
+<body>
+
+    {% if error_message %}
+        <p style="color: red;">{{ error_message }}</p>
+    {% endif %}
+
+    <h1>Enter function and data range:</h1>
+    <form method="POST">
+        <label for="x_min">X Minimum:</label>
+        <input type="number" name="x_min" required>
+        <br>
+        <label for="x_max">X Maximum:</label>
+        <input type="number" name="x_max" required>
+        <br>
+        <label for="y_min">Y Minimum:</label>
+        <input type="number" name="y_min" required>
+        <br>
+        <label for="y_max">Y Maximum:</label>
+        <input type="number" name="y_max" required>
+        <br>
+        <label for="function">Function (e.g., sin(x), x**2):</label>
+        <input type="text" name="function" required>
+        <br>
+        <input type="submit" value="Plot Function">
+    </form>
+
+    {% if plot %}
+        <script>
+            Bokeh.embed.components(plot)  # Pass the plot object from Flask
+        </script>
+    {% endif %}
+
