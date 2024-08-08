@@ -51,13 +51,13 @@ min1_source = ColumnDataSource(data={'x': [], 'y': []})
 min2_source = ColumnDataSource(data={'x': [], 'y': []})
 min3_source = ColumnDataSource(data={'x': [], 'y': []})
 
-plot.circle('x', 'y', source=max1_source, size=5, color='blue', legend_label='Maximum Point 71 Degrees')
-plot.circle('x', 'y', source=max2_source, size=5, color='blue', legend_label='Maximum Point 78 Degrees')
-plot.circle('x', 'y', source=max3_source, size=5, color='blue', legend_label='Maximum Point 85 Degrees')
+plot.circle('x', 'y', source=max1_source, size=5, fill_color='blue', line_color='yellow', legend_label='Maximum Point 71 Degrees')
+plot.circle('x', 'y', source=max2_source, size=5, fill_color='blue', line_color='red',legend_label='Maximum Point 78 Degrees')
+plot.circle('x', 'y', source=max3_source, size=5, fill_color='blue', line_color='pink', legend_label='Maximum Point 85 Degrees')
 
-plot.circle('x', 'y', source=min1_source, size=5, color='green', legend_label='Minimum Point 71 Degrees')
-plot.circle('x', 'y', source=min2_source, size=5, color='green', legend_label='Minimum Point 78 Degrees')
-plot.circle('x', 'y', source=min3_source, size=5, color='green', legend_label='Minimum Point 85 Degrees')
+plot.circle('x', 'y', source=min1_source, size=5, fill_color='green', line_color='yellow', legend_label='Minimum Point 71 Degrees')
+plot.circle('x', 'y', source=min2_source, size=5, fill_color='green', line_color='red', legend_label='Minimum Point 78 Degrees')
+plot.circle('x', 'y', source=min3_source, size=5, fill_color='green', line_color='pink',legend_label='Minimum Point 85 Degrees')
 # Create lines (initially empty)
 plot.line('x', 'y', source=line1_source, color="blue", legend_label="30 Degrees")
 plot.line('x', 'y', source=line2_source, color="green", legend_label="45 Degrees")
@@ -65,6 +65,7 @@ plot.line('x', 'y', source=line3_source, color="orange", legend_label="60 Degree
 plot.line('x', 'y', source=line4_source, color="yellow", legend_label="71 Degrees")
 plot.line('x', 'y', source=line5_source, color="red", legend_label="78 Degrees")
 plot.line('x', 'y', source=line6_source, color="pink", legend_label="85 Degrees")
+
 deg = Projectile.Projectile(angle=(math.radians(30)))
 return1 = task7.calculateRangeTimeData(deg)
 deg1 = Projectile.Projectile(angle=(math.radians(45)))
@@ -76,9 +77,9 @@ deg3 = Projectile.Projectile(angle=(math.radians(71)))
 return4 = task7.calculateRangeTimeData(deg3)
 seven1_max, seven1_min = task7.calculateMaxAndMinTime(deg3)
 seven1_max_index = find_closest_index_sorted(return4[0],seven1_max)
-max2_source.data = {'x': [seven1_max], 'y': [return4[1][seven1_max_index]]}
+max1_source.data = {'x': [seven1_max], 'y': [return4[1][seven1_max_index]]}
 seven1_min_index = find_closest_index_sorted(return4[0],seven1_min)
-min2_source.data = {'x': [seven1_min], 'y': [return4[1][seven1_min_index]]}
+min1_source.data = {'x': [seven1_min], 'y': [return4[1][seven1_min_index]]}
 
 deg4 = Projectile.Projectile(angle=(math.radians(78)))
 return5 = task7.calculateRangeTimeData(deg4)
@@ -92,11 +93,9 @@ deg5 = Projectile.Projectile(angle=(math.radians(85)))
 return6 = task7.calculateRangeTimeData(deg5)
 eight5_max, eight5_min = task7.calculateMaxAndMinTime(deg5)
 eight5_max_index = find_closest_index_sorted(return6[0],eight5_max)
-max2_source.data = {'x': [eight5_max], 'y': [return6[1][eight5_max_index]]}
+max3_source.data = {'x': [eight5_max], 'y': [return6[1][eight5_max_index]]}
 eight5_min_index = find_closest_index_sorted(return6[0],eight5_min)
-min2_source.data = {'x': [eight5_min], 'y': [return6[1][eight5_min_index]]}
-
-print(return6)
+min3_source.data = {'x': [eight5_min], 'y': [return6[1][eight5_min_index]]}
 
 line1_source.data = {'x': return1[0], 'y': return1[1]}
 line2_source.data = {'x': return2[0], 'y': return2[1]}
