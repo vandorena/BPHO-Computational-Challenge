@@ -11,6 +11,8 @@ def calculateRangeTimeData(proj: Projectile.Projectile) -> list:
     :param proj: the projectile object
     :return: list of range values, consistent with the projectile updates
     """
+    list = []
+    times = [0]
     distanceFromStartData = [0]
     while proj.y >= -5:
         # updating position
@@ -24,9 +26,11 @@ def calculateRangeTimeData(proj: Projectile.Projectile) -> list:
         # updating data
         proj.log()
         totalTime = proj.getData()['totalTime'][-1]
+        times.append(totalTime)
         distanceFromStartData.append(math.sqrt(proj.initialVel**2 * totalTime**2 - Constants.g * totalTime**3 * proj.initialVel * math.sin(proj.initialAngle) + 0.25 * Constants.g ** 2 * totalTime ** 4))
-
-    return distanceFromStartData
+    list.append(times)
+    list.append(distanceFromStartData)
+    return list
 
 
 def calculateMaxAndMinTime(proj: Projectile.Projectile) -> tuple[float, float]:
