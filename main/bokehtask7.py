@@ -30,6 +30,11 @@ def find_closest_index_sorted(numbers, target):
   else:
     return idx - 1
   
+def find_minimum_index(times, min_time):
+    for i, t in enumerate(times):
+        if t >= min_time:
+            return i
+    return len(times) - 1
 
 # Create a scatter plot with a target point
 plot = figure(title="Task 7 - u = 20m/s g = 9.81 m/s^2", tools="reset,save")
@@ -84,10 +89,15 @@ min1_source.data = {'x': [seven1_min], 'y': [return4[1][seven1_min_index]]}
 deg4 = Projectile.Projectile(angle=(math.radians(78)))
 return5 = task7.calculateRangeTimeData(deg4)
 seven8_max, seven8_min = task7.calculateMaxAndMinTime(deg4)
-seven8_max_index = find_closest_index_sorted(return5[0],seven8_min)
-max2_source.data = {'x': [seven8_max], 'y': [return5[1][seven8_max_index]]}
-seven8_min_index = find_closest_index_sorted(return5[0],seven8_max)
-min2_source.data = {'x': [seven8_min], 'y': [return5[1][seven8_min_index]]}
+seven8_max_index = None
+for i, t in enumerate(return5[0]):
+    if t >= seven8_max:
+        seven8_max_index = i
+        break
+if seven8_max_index is not None:
+    max2_source.data = {'x': [seven8_max], 'y': [return5[1][seven8_max_index]]}
+seven8_min_index = find_minimum_index(return5[0],seven8_min)
+min2_source.data = {'x': [seven8_min], 'y': [return5[1][seven8_min_index]]} 
 
 deg5 = Projectile.Projectile(angle=(math.radians(85)))
 return6 = task7.calculateRangeTimeData(deg5)

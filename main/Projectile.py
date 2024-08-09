@@ -10,7 +10,7 @@ class Projectile:
     It also has a function to store variables, after being updated, for later use.
     Also, a function to retrieve this data and print it.
     """
-    def __init__(self, x: float = 0, y: float = 2, v: float = 20, angle: float = math.radians(45), vx=None, vy=None,g: float=9.81) -> None:
+    def __init__(self, x: float = 0, y: float = 2, v: float = 20, angle: float = math.radians(45), vx=None, vy=None,g: float=9.81, coe: float=0.3) -> None:
         """
         The init function
         :param x: the starting x position
@@ -32,6 +32,7 @@ class Projectile:
 
         # Variable Variables
         self.g = g
+        self.COE = coe
         # variable coordinates
         self.x = x
         self.y = y
@@ -82,8 +83,8 @@ class Projectile:
 
 class ProjectileList(Projectile):
     
-    def __init__(self, x: float = 0, y: float = 2, v: float = 20, angle: float = math.radians(45), vx=None, vy=None, g: float = 9.81) -> None:
-        super().__init__(x, y, v, angle, vx, vy,g)
+    def __init__(self, x: float = 0, y: float = 2, v: float = 20, angle: float = math.radians(45), vx=None, vy=None, g: float = 9.81, coe: float = 0.3) -> None:
+        super().__init__(x, y, v, angle, vx, vy,g,coe=coe)
         self._data = [[0],[0],[round(self.vx,4)],[round(self.vy,4)],[self.initialVel],[self.x],[self.y]]
 
     def log(self,roundTo=None) -> None:

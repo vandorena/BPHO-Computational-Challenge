@@ -13,11 +13,11 @@ def bouncyProjectileData(proj: Projectile.Projectile, n: int) -> None:
     while bounceCount <= n:
         # updating position
         proj.x += proj.vx * Constants.TIMESTEP
-        proj.y += (proj.vy * Constants.TIMESTEP) - (0.5 * Constants.g * (Constants.TIMESTEP ** 2))
+        proj.y += (proj.vy * Constants.TIMESTEP) - (0.5 * proj.g * (Constants.TIMESTEP ** 2))
 
         # updating velocity
         proj.vx = proj.vx  # As x velocity isn't affected
-        proj.vy += -Constants.g * Constants.TIMESTEP  # Accelerated downwards by g
+        proj.vy += -proj.g * Constants.TIMESTEP  # Accelerated downwards by g
 
         # updating data
         proj.log()
@@ -25,7 +25,7 @@ def bouncyProjectileData(proj: Projectile.Projectile, n: int) -> None:
         # check for bounce
         if proj.y < 0:
             proj.y = 0
-            proj.vy = -Constants.COE * proj.vy
+            proj.vy = -proj.COE * proj.vy
             bounceCount += 1
 
 
